@@ -27,13 +27,14 @@ package com.rojored.gatracking
 {
 
 import flash.display.DisplayObject;
+import flash.display.Loader;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.events.SecurityErrorEvent;
-import flash.net.URLLoader;
 import flash.net.URLRequest;
 import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
+import flash.system.LoaderContext;
 
 /**
  *  Barebones Actionscript3 implementation of the Google Analytics data
@@ -82,9 +83,9 @@ public class GATracker
     // request is pending when a new one is made.
     /**
      *  @private
-     *  URLLoader used in tracking requests.
+     *  Loader used in tracking requests.
      */
-    private var loader:URLLoader;
+    private var loader:Loader;
 
 
     //--------------------------------------------------------------------------
@@ -178,16 +179,19 @@ public class GATracker
         request.method = URLRequestMethod.GET;
         request.data = variables;
 
-        loader = new URLLoader();
+        loader = new Loader();
 
-        loader.addEventListener(Event.COMPLETE, loader_completeHandler);
-        loader.addEventListener(IOErrorEvent.IO_ERROR, loader_ioErrorHandler);
-        loader.addEventListener(
-            SecurityErrorEvent.SECURITY_ERROR,
-            loader_securityErrorHandler
+        loader.contentLoaderInfo.addEventListener(
+            Event.COMPLETE,
+            loader_completeHandler
+            );
+        loader.contentLoaderInfo.addEventListener(
+            IOErrorEvent.IO_ERROR,
+            loader_ioErrorHandler
             );
 
-        loader.load(request);
+        // use LoaderContext to prevent security errors.
+        loader.load(request, new LoaderContext());
     }
 
     /**
@@ -195,14 +199,13 @@ public class GATracker
      */
     private function removeLoaderListeners():void
     {
-        loader.removeEventListener(Event.COMPLETE, loader_completeHandler);
-        loader.removeEventListener(
+        loader.contentLoaderInfo.removeEventListener(
+            Event.COMPLETE,
+            loader_completeHandler
+            );
+        loader.contentLoaderInfo.removeEventListener(
             IOErrorEvent.IO_ERROR,
             loader_ioErrorHandler
-            );
-        loader.removeEventListener(
-            SecurityErrorEvent.SECURITY_ERROR,
-            loader_securityErrorHandler
             );
     }
 
@@ -228,15 +231,6 @@ public class GATracker
     private function loader_ioErrorHandler(event:IOErrorEvent):void
     {
         trace("track IOError:", event);
-        removeLoaderListeners();
-    }
-
-    /**
-     *  @private
-     */
-    private function loader_securityErrorHandler(event:SecurityErrorEvent):void
-    {
-        trace("track SecurityError:", event);
         removeLoaderListeners();
     }
 
