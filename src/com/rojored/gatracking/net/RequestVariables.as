@@ -140,7 +140,7 @@ public class RequestVariables
     /**
      *  Event tracking data.
      *
-     *  <p>Event data, encoded; FIXME: not sure about the format.</p>
+     *  <p>Event data, encoded; FIXME: figure the format.</p>
      *
      *  <p>This parameter is optional, used in event tracking.</p>
      */
@@ -172,8 +172,12 @@ public class RequestVariables
      */
     public var utmhn:String;
 
-    // FIXME: Missing properties, not yet implemented: utmipc, utmipn, utmipr,
-    // utmiqt, utmiva.
+    // FIXME: Missing properties, not yet implemented:
+    //  utmipc
+    //  utmipn
+    //  utmipr
+    //  utmiqt
+    //  utmiva
 
     //--------------------------------------
     //   utmje
@@ -185,7 +189,7 @@ public class RequestVariables
      *  <p>Possible values are <code>1</code> (true) or <code>0</code>
      *  (false).
      *
-     *  <p>Optional.</p>
+     *  <p>This parameter is optional.</p>
      */
     public var utmje:String;
 
@@ -194,12 +198,13 @@ public class RequestVariables
     //--------------------------------------
 
     /**
-     *  Unique generater request ID, to prevent caching of the GIF image.
+     *  Unique generater request ID, used to prevent caching of the GIF image.
      *
      *  <p>Our implementation uses epoch time when the request is made as a
      *  value.</p>
      *
-     *  <p>Mandatory.</p>
+     *  <p>This parameter is mandatory, but it would be handled by the
+     *  library.</p>
      */
     public var utmn:String;
 
@@ -212,9 +217,101 @@ public class RequestVariables
      *
      *  <p>The value of this property is not URL-encoded in the request.</p>
      *
-     *  <p>Mandatory.</p>
+     *  <p>This parameter is mandatory.</p>
      */
     public var utmp:String;
+
+    //--------------------------------------
+    //   utmr
+    //--------------------------------------
+
+    /**
+     *  Referrer.
+     *
+     *  <p>Complete URL, including request parameters. The value of this
+     *  property is URL-encoded.</p>
+     *
+     *  <p>This parameter is optional.</p>
+     */
+    public var utmr:String;
+
+    //--------------------------------------
+    //   utmsc
+    //--------------------------------------
+
+    /**
+     *  Screen color depth.
+     *
+     *  <p>The value of this property is URL-encoded.</p>
+     *
+     *  <p>This parameter is optional.</p>
+     */
+    public var utmsc:String;
+
+    //--------------------------------------
+    //   utmsr
+    //--------------------------------------
+
+    /**
+     *  Screen resolution.
+     *
+     *  <p>The value of this property is URL-encoded.</p>
+     *
+     *  <p>This parameter is optional.</p>
+     */
+    public var utmsr:String;
+
+    //--------------------------------------
+    //   utmt
+    //--------------------------------------
+
+    /**
+     *  Type variable applied to events (<code>utmt=event</code>),
+     *  transactions, items and user-defined variables.
+     *
+     *  <p>The value of this property is URL-encoded.</p>
+     *
+     *  <p>This parameter is mandatory for events.</p>
+     */
+    public var utmt:String;
+
+    // FIXME: Missing properties, not yet implemented:
+    //  utmtci
+    //  utmtco
+    //  utmtid
+    //  utmtrg
+    //  utmtsp
+    //  utmtst
+    //  utmtto
+    //  utmttx
+
+    //--------------------------------------
+    //   utmul
+    //--------------------------------------
+
+    /**
+     *  Browser language.
+     *
+     *  <p>The value of this property is URL-encoded.</p>
+     *
+     *  <p>This parameter is optional.</p>
+     */
+    public var utmul:String;
+
+    //--------------------------------------
+    //   utmwv
+    //--------------------------------------
+
+    /**
+     *  Tracking code version.
+     *
+     *  <p>FIXME: not sure how this works, using "4" for now.</p>
+     *
+     *  <p>The value of this property is not URL-encoded.</p>
+     *
+     *  <p>This parameter is optional.</p>
+     */
+    public var utmwv:String = "4";
 
 
     //--------------------------------------------------------------------------
