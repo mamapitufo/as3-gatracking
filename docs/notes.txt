@@ -1,7 +1,37 @@
 gaforflash example: http://solidsystemscr.com/MoveTest/Test.swf
 
 event request:
-http://www.google-analytics.com/__utm.gif?utmwv=4.3as&utmn=637025701&utmhn=solidsystemscr.com&utmt=event&utme=5(ID1*ID2*timeOver)(1514)&utmcs=UTF-8&utmsr=1680x1050&utmsc=24-bit&utmul=en-us&utmje=0&utmfl=10.0%20r32&utmdt=Test.swf%20(application/x-shockwave-flash%20Object)&utmhid=568832499&utmr=-&utmp=/MoveTest/Test.swf&utmac=UA-6128326-2&utmcc=__utma%3D146289974.1566102518155979800.1251499531.1251499531.1251503078.2%3B%2B__utmz%3D146289974.1251499531.1.1.utmcsr%3D(direct)%7Cutmccn%3D(direct)%7Cutmcmd%3D(none)%3B
+utmwv=4.3as
+utmn=834063598
+utmhn=solidsystemscr.com
+utmt=event
+utme=5%28ID1*ID2*timeOver%29%282285%29
+utmcs=UTF-8
+utmsr=1280x1024
+utmsc=24-bit
+utmul=en-us
+utmje=0
+utmfl=10.0+r32
+utmhid=1379168506
+utmr=http%3A%2F%2Fpedantesyestrofas.org%2Fanalytics.html
+utmp=%2FMoveTest%2FTest.swf
+utmac=UA-6128326-2
+utmcn=1
+utmcc=__utma%3D146289974.2744780030555007500.1251591775.1251591775.1251591775.1%3B%2B__utmz%3D146289974.1251591775.1.1.utmcsr%3Dpedantesyestrofas.org%7Cutmccn%3D%28referral%29%7Cutmcmd%3Dreferral%7Cutmcct%3D%2Fanalytics.html%3B
 
 pageview request:
-http://www.google-analytics.com/__utm.gif?utmwv=4.3as&utmn=1538185261&utmhn=solidsystemscr.com&utmcs=UTF-8&utmsr=1680x1050&utmsc=24-bit&utmul=en-us&utmje=0&utmfl=10.0%20r32&utmdt=Test.swf%20(application/x-shockwave-flash%20Object)&utmhid=568832499&utmr=-&utmp=/myGame1&utmac=UA-6128326-2&utmcc=__utma%3D146289974.1566102518155979800.1251499531.1251499531.1251503078.2%3B%2B__utmz%3D146289974.1251499531.1.1.utmcsr%3D(direct)%7Cutmccn%3D(direct)%7Cutmcmd%3D(none)%3B
+utmwv=4.3as
+utmn=968264813
+utmhn=solidsystemscr.com
+utmcs=UTF-8
+utmsr=1280x1024
+utmsc=24-bit
+utmul=en-us
+utmje=0
+utmfl=10.0+r32
+utmhid=1379168506
+utmr=http%3A%2F%2Fpedantesyestrofas.org%2Fanalytics.html
+utmp=%2FmyGame1
+utmac=UA-6128326-2
+utmcn=1
+utmcc=__utma%3D146289974.2744780030555007500.1251591775.1251591775.1251591775.1%3B%2B__utmz%3D146289974.1251591775.1.1.utmcsr%3Dpedantesyestrofas.org%7Cutmccn%3D%28referral%29%7Cutmcmd%3Dreferral%7Cutmcct%3D%2Fanalytics.html%3B
