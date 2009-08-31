@@ -48,6 +48,12 @@ public class RequestVariables
     //--------------------------------------
 
     /**
+     *  @private
+     *  Storage for the utmac property.
+     */
+    private var _utmac:String;
+
+    /**
      *  Account string.
      *
      *  <p>The value of this property is not URL-encoded in the request.</p>
@@ -55,7 +61,23 @@ public class RequestVariables
      *  <p>This parameter is mandatory; it must appear on every request, it
      *  must be non-empty.</p>
      */
-    public var utmac:String;
+    public function get utmac():String
+    {
+        return encodeURIComponent(_utmac);
+    }
+
+    /**
+     *  @private
+     */
+    public function set utmac(value:String):void
+    {
+        if (/^UA-\d{7}-\d$/.test(value))
+            _utmac = value;
+        else
+            throw new Error(
+                "'" + value + "' is not a valid Google Analytics account"
+                );
+    }
 
     //--------------------------------------
     //   utmcc
@@ -83,8 +105,7 @@ public class RequestVariables
      *  given request. Possible values for this parameter are <code>1</code>
      *  (true) or <code>0</code> (false).</p>
      *
-     *  <p>FIXME: Not sure if the parameter is mandatory. This functionality
-     *  is not yet implemented.</p>
+     *  <p>This parameter is optional.</p>
      */
     public var utmcn:String;
 
@@ -99,8 +120,7 @@ public class RequestVariables
      *  given request. Possible values for this parameter are <code>1</code>
      *  (true) or <code>0</code> (false).</p>
      *
-     *  <p>FIXME: Not sure if the parameter is mandatory. This functionality
-     *  is not yet implemented.</p>
+     *  <p>This parameter is optional.</p>
      */
     public var utmcr:String;
 
@@ -327,6 +347,22 @@ public class RequestVariables
     {
         super();
     }
+
+
+    //--------------------------------------------------------------------------
+    //
+    //  Methods
+    //
+    //--------------------------------------------------------------------------
+
+    /**
+     *  Concatenates all defined properties, to be used as <code>GET</code>
+     *  parameters.
+     */
+    public function toString():String
+    {
+    }
+
 }
 
 }
