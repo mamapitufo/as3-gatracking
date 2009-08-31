@@ -23,11 +23,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-package com.rojored.gatracking.data
+package com.rojored.gatracking.net
 {
 
 /**
- *  The <code>RequestVariables</code> encapsulates all of the possible
+ *  The <code>RequestVariables</code> class encapsulates all of the possible
  *  <code>__utm.gif</code>'s request parameters.
  *
  *  @author Alberto Brealey-Guzmán alberto.brealey@gmail.com

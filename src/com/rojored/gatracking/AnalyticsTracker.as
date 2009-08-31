@@ -26,7 +26,7 @@
 package com.rojored.gatracking
 {
 
-import com.rojored.gatracking.data.RequestVariables;
+import com.rojored.gatracking.net.RequestVariables;
 import flash.display.DisplayObject;
 import flash.display.Loader;
 import flash.events.Event;
