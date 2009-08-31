@@ -46,7 +46,7 @@ import flash.system.LoaderContext;
  *  @author Alberto Brealey-Guzmán alberto.brealey@gmail.com
  *  @version $Id$
  */
-public class GATracker
+public class AnalyticsTracker
 {
 
 
@@ -120,9 +120,11 @@ public class GATracker
     /**
      *  Constructor.
      *
+     *  @param display Display object used to get environment information.
+     *  The instance must be attached to the display list.
      *  @param accountId Google Analytics account string.
      */
-    public function GATracker(display:DisplayObject, accountId:String)
+    public function AnalyticsTracker(display:DisplayObject, accountId:String)
     {
         super();
 

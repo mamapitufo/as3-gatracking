@@ -4,7 +4,7 @@
 
     <output>bin/as3-gatracking.swc</output>
     <include-classes>
-        <class>com.rojored.gatracking.GATracker</class>
+        <class>com.rojored.gatracking.AnalyticsTracker</class>
     </include-classes>
     <compiler>
         <source-path>
