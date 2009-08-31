@@ -26,6 +26,7 @@
 package com.rojored.gatracking
 {
 
+import com.rojored.gatracking.net.RequestVariables;
 import flash.display.DisplayObject;
 import flash.display.Loader;
 import flash.events.Event;
@@ -33,7 +34,6 @@ import flash.events.IOErrorEvent;
 import flash.events.SecurityErrorEvent;
 import flash.net.URLRequest;
 import flash.net.URLRequestMethod;
-import flash.net.URLVariables;
 import flash.system.LoaderContext;
 
 /**
@@ -145,7 +145,7 @@ public class GATracker
      */
     public function trackPageview(pageURL:String = ""):void
     {
-        var variables:URLVariables = new URLVariables();
+        var variables:RequestVariables = new RequestVariables();
         variables.utmp = pageURL;
 
         trackRequest(variables);
@@ -162,22 +162,21 @@ public class GATracker
      *  @private
      *  Make a tracking request.
      *
-     *  @param variables URLVariables instance with additional parameters.
+     *  @param variables RequestVariables instance with additional parameters.
      */
-    private function trackRequest(variables:URLVariables = null):void
+    private function trackRequest(variables:RequestVariables = null):void
     {
         if (!variables)
-            variables = new URLVariables();
+            variables = new RequestVariables();
 
         // Default parameters.
         variables.utmac = accountId;
-        variables.utmn = new Date().time;
         variables.utmhn = display.stage.loaderInfo.url;
         variables.utmwv = API_VERSION;
 
         var request:URLRequest = new URLRequest(TRACK_GIF_URL);
         request.method = URLRequestMethod.GET;
-        request.data = variables;
+        request.data = variables.toString();
 
         loader = new Loader();
 

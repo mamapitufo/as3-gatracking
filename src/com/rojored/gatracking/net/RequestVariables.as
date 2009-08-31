@@ -71,7 +71,7 @@ public class RequestVariables
      */
     public function set utmac(value:String):void
     {
-        if (/^UA-\d{7}-\d$/.test(value))
+        if (/^UA-\d+-\d+$/.test(value))
             _utmac = value;
         else
             throw new Error(
@@ -235,7 +235,7 @@ public class RequestVariables
     /**
      *  Page name.
      *
-     *  <p>The value of this property is not URL-encoded in the request.</p>
+     *  <p>The value of this property is URL-encoded in the request.</p>
      *
      *  <p>This parameter is mandatory.</p>
      */
@@ -361,6 +361,21 @@ public class RequestVariables
      */
     public function toString():String
     {
+        var params:Array = [];
+
+        if (utmwv)
+            params.push("utmwv=" + encodeURIComponent(utmwv));
+        params.push("utmn=" + new Date().time);
+        if (utmhn)
+            params.push("utmhn=" + encodeURIComponent(utmhn));
+        if (utmp)
+            params.push("utmp=" + encodeURIComponent(utmp));
+        if (utmac)
+            params.push("utmac=" + utmac);
+        if (utmcc)
+            params.push("utmcc=" + utmcc);
+
+        return params.join("&");
     }
 
 }
