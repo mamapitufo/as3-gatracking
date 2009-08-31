@@ -48,7 +48,7 @@ Cookies
 (http://www.randycullom.com/chatterbox/archives/2008/10/google_analytic.html)
 
 __utma: unique id. 2 years. path set to / by default.
-    ex: 146289974.2744780030555007500.1251591775.1251591775.1251591775.1
+    eg: 146289974.2744780030555007500.1251591775.1251591775.1251591775.1
 
 __utmb, __utmc: the absence of either one signals the start of a session. Not
 much else... apparently not used in as3 tracking. path set to / by default.
@@ -56,7 +56,7 @@ much else... apparently not used in as3 tracking. path set to / by default.
     __utmc: no expiration, deleted when the browser is closed.
 
 __utmz: referral info. 6 months. path set to / by default.
-    ex: 146289974.1251591775.1.1.utmcsr=pedantesyestrofas.org|utmccn=(referral)|utmcmd=referral|utmcct=/analytics.html;
+    eg: 146289974.1251591775.1.1.utmcsr=pedantesyestrofas.org|utmccn=(referral)|utmcmd=referral|utmcct=/analytics.html;
 
 won't code yet.
 __utmv: used for custom vars.
