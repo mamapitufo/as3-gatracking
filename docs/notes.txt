@@ -35,3 +35,27 @@ utmp=%2FmyGame1
 utmac=UA-6128326-2
 utmcn=1
 utmcc=__utma%3D146289974.2744780030555007500.1251591775.1251591775.1251591775.1%3B%2B__utmz%3D146289974.1251591775.1.1.utmcsr%3Dpedantesyestrofas.org%7Cutmccn%3D%28referral%29%7Cutmcmd%3Dreferral%7Cutmcct%3D%2Fanalytics.html%3B
+--- referred.
+utmcc=__utma=146289974.2744780030555007500.1251591775.1251591775.1251591775.1;+__utmz=146289974.1251591775.1.1.utmcsr=pedantesyestrofas.org|utmccn=(referral)|utmcmd=referral|utmcct=/analytics.html;
+--- direct.
+utmcc=__utma=146289974.2744780030555007500.1251591775.1251591775.1251591775.1;+__utmz=146289974.1251591775.1.1.utmcsr=pedantesyestrofas.org|utmccn=(referral)|utmcmd=referral|utmcct=/analytics.html;
+
+
+Cookies
+(http://code.google.com/apis/analytics/docs/concepts/gaConceptsCookies.html)
+(http://www.randycullom.com/chatterbox/archives/2008/10/google_analytic.html)
+
+__utma: unique id. 2 years. path set to / by default.
+    ex: 146289974.2744780030555007500.1251591775.1251591775.1251591775.1
+
+__utmb, __utmc: the absence of either one signals the start of a session. Not
+much else... apparently not used in as3 tracking. path set to / by default.
+    __utmb: 30 minutes.
+    __utmc: no expiration, deleted when the browser is closed.
+
+__utmz: referral info. 6 months. path set to / by default.
+    ex: 146289974.1251591775.1.1.utmcsr=pedantesyestrofas.org|utmccn=(referral)|utmcmd=referral|utmcct=/analytics.html;
+
+won't code yet.
+__utmv: used for custom vars.
+__utmx: used for Google Website Optimizer.
