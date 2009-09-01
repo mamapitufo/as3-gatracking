@@ -85,6 +85,7 @@ public class CookieJar
 
     /**
      *  @private
+     *  Storage for the visitorId property.
      */
     private var _visitorId:String;
 
@@ -94,6 +95,78 @@ public class CookieJar
     public function get visitorId():String
     {
         return _visitorId;
+    }
+
+    //--------------------------------------
+    //   firstVisit
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the firstVisit property
+     */
+    private var _firstVisit:Number;
+
+    /**
+     *  Timestamp of the user's first visit, in UXIX epoch.
+     */
+    public function get firstVisit():Number
+    {
+        return _firstVisit;
+    }
+
+    //--------------------------------------
+    //   lastVisit
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the lastVisit property.
+     */
+    private var _lastVisit:Number;
+
+    /**
+     *  Timestamp of the user's last visit, in UNIX epoch.
+     */
+    public function get lastVisit():Number
+    {
+        return _lastVisit;
+    }
+
+    //--------------------------------------
+    //   numSessions
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the numSessions property
+     */
+    private var _numSessions:Number;
+
+    /**
+     *  Number of sessions the user has had since their first visit.
+     */
+    public function get numSessions():Number
+    {
+        return _numSessions;
+    }
+
+    //--------------------------------------
+    //   utmaExpiration
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the utmaExpiration property.
+     */
+    private var _utmaExpiration:Date;
+
+    /**
+     *  Expiration date for the utma cookie.
+     */
+    public function utmaExpiration():Date
+    {
+        return _utmaExpiration;
     }
 
 
