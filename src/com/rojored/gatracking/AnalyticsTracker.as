@@ -113,6 +113,24 @@ public class AnalyticsTracker
     }
 
     //--------------------------------------
+    //   hostname
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the hostname property
+     */
+    private var _hostname:String;
+
+    /**
+     *  Hostname where the flash file is located.
+     */
+    public function get hostname():String
+    {
+        return _hostname;
+    }
+
+    //--------------------------------------
     //   cookieJar
     //--------------------------------------
 
@@ -139,8 +157,9 @@ public class AnalyticsTracker
         super();
 
         this.display = display;
+        _hostname = hostnameFromURL(display.root.loaderInfo.url);
 
-        cookieJar = new CookieJar(display.stage.loaderInfo.url);
+        cookieJar = new CookieJar(hostname);
 
         _accountId = accountId;
     }
@@ -185,7 +204,7 @@ public class AnalyticsTracker
 
         // Default parameters.
         variables.utmac = accountId;
-        variables.utmhn = display.stage.loaderInfo.url;
+        variables.utmhn = hostname;
         variables.utmwv = API_VERSION;
         variables.utmcc = encodeURI("__utma=" + cookieJar.generateNewUTMAValue());
 
@@ -221,6 +240,17 @@ public class AnalyticsTracker
             IOErrorEvent.IO_ERROR,
             loader_ioErrorHandler
             );
+    }
+
+    /**
+     *  @private
+     */
+    private function hostnameFromURL(url:String):String
+    {
+        var matchDomain:RegExp = new RegExp("^(https?://)(?P<domain>[^/]+)");
+        var result:Object = matchDomain.exec(url);
+
+        return (result ? result.domain : "localhost");
     }
 
 

@@ -250,6 +250,7 @@ public class CookieJar
             _visitorId = sharedObject.data.visitorId;
             _firstVisit = sharedObject.data.firstVisit;
             _lastVisit = sharedObject.data.lastVisit;
+            _numSessions = sharedObject.data.numSessions;
         }
         else
         {
@@ -260,6 +261,7 @@ public class CookieJar
             _visitorId = sharedObject.data.visitorId = getVisitorId();
             _firstVisit = sharedObject.data.firstVisit = now;
             _lastVisit = sharedObject.data.lastVisit = now;
+            _numSessions = sharedObject.data.numSessions = 1;
         }
 
         _utmaExpiration = now + 63072000; // 2 years, 3600 * 24 * 365 * 2
