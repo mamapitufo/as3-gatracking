@@ -26,6 +26,7 @@
 package com.rojored.gatracking
 {
 
+import com.rojored.gatracking.net.CookieJar;
 import com.rojored.gatracking.net.RequestVariables;
 import flash.display.DisplayObject;
 import flash.display.Loader;
@@ -110,6 +111,15 @@ public class AnalyticsTracker
     {
         return _accountId;
     }
+
+    //--------------------------------------
+    //   cookieJar
+    //--------------------------------------
+
+    /**
+     *  Persistent values needed for cookie management.
+     */
+    public var cookieJar:CookieJar;
 
     //--------------------------------------------------------------------------
     //
