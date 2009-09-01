@@ -171,7 +171,7 @@ public class CookieJar
             }
             */
             // and here's what we'll use for now:
-            domainHash = 1;
+            domainHash = "1";
 
             sharedObject.data.domainHash = domainHash;
             sharedObject.flush();
@@ -195,7 +195,7 @@ public class CookieJar
         if (!visitorId)
         {
             // FIXME: do a better job at uniqueness...
-            visitorId = Math.round(Math.random() * 0x7fffffff);
+            visitorId = String(Math.round(Math.random() * 0x7fffffff));
             sharedObject.data.visitorId = visitorId;
         }
 
