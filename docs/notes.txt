@@ -61,3 +61,8 @@ __utmz: referral info. 6 months. path set to / by default.
 won't code yet.
 __utmv: used for custom vars.
 __utmx: used for Google Website Optimizer.
+
+encodeURI(
+    "__utma=[DOMAINHASH].[VISITORID].[DATEFIRSTSET].[DATEPREVIOUSLYSET].[DATENOW].[NUMVISITS];+" +
+    "__utmz=[DOMAINHASH].[DATESET].[NUMVISITS].[NUMSOURCESFORTHISVISITOR].utmccn=(direct)|utmcsr=(direct)|utmcmd=(none);"
+);
