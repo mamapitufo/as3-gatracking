@@ -139,7 +139,9 @@ public class AnalyticsTracker
         super();
 
         this.display = display;
-        // TODO: throw up if empty, perhaps some validation?
+
+        cookieJar = new CookieJar(display.stage.loaderInfo.url);
+
         _accountId = accountId;
     }
 
@@ -185,6 +187,7 @@ public class AnalyticsTracker
         variables.utmac = accountId;
         variables.utmhn = display.stage.loaderInfo.url;
         variables.utmwv = API_VERSION;
+        variables.utmcc = encodeURI("__utma=" + cookieJar.generateNewUTMAValue());
 
         var request:URLRequest = new URLRequest(TRACK_GIF_URL);
         request.method = URLRequestMethod.GET;

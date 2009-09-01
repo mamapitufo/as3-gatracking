@@ -368,8 +368,7 @@ public class RequestVariables
         params.push("utmn=" + new Date().time);
         if (utmhn)
             params.push("utmhn=" + encodeURIComponent(utmhn));
-        if (utmp)
-            params.push("utmp=" + encodeURIComponent(utmp));
+        params.push("utmp=" + encodeURIComponent(utmp));
         if (utmac)
             params.push("utmac=" + utmac);
         if (utmcc)

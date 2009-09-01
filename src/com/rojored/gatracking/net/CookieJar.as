@@ -61,6 +61,24 @@ public class CookieJar
     //--------------------------------------------------------------------------
 
     //--------------------------------------
+    //   domain
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the domain property
+     */
+    private var _domain:String;
+
+    /**
+     *  The domain name for which this jar stores cookie values.
+     */
+    public function get domain():String
+    {
+        return _domain;
+    }
+
+    //--------------------------------------
     //   domainHash
     //--------------------------------------
 
@@ -68,13 +86,13 @@ public class CookieJar
      *  @private
      *  Storage for the domainHash property.
      */
-    private var _domainHash:String;
+    private var _domainHash:int;
 
     /**
      *  The domain hash, used in <code>__utma</code>, <code>__utmb</code> and
      *  <code>__utmz</code> cookies.
      */
-    public function get domainHash():String
+    public function get domainHash():int
     {
         return _domainHash;
     }
@@ -87,12 +105,12 @@ public class CookieJar
      *  @private
      *  Storage for the visitorId property.
      */
-    private var _visitorId:String;
+    private var _visitorId:int;
 
     /**
      *  Random number used as a unique ID for visitors.
      */
-    public function get visitorId():String
+    public function get visitorId():int
     {
         return _visitorId;
     }
@@ -141,7 +159,7 @@ public class CookieJar
      *  @private
      *  Storage for the numSessions property
      */
-    private var _numSessions:Number;
+    private var _numSessions:Number = 0;
 
     /**
      *  Number of sessions the user has had since their first visit.
@@ -157,14 +175,14 @@ public class CookieJar
 
     /**
      *  @private
-     *  Storage for the utmaExpiration property.
+     *  Storage for the utmaExpiration property
      */
-    private var _utmaExpiration:Date;
+    private var _utmaExpiration:int;
 
     /**
-     *  Expiration date for the utma cookie.
+     *  Expiration date for the utma cookie, in UNIX epoch time.
      */
-    public function utmaExpiration():Date
+    public function utmaExpiration():int
     {
         return _utmaExpiration;
     }
@@ -186,10 +204,8 @@ public class CookieJar
     {
         super();
 
-        initSharedObject();
-
-        _domainHash = getDomainHash(domain);
-        _visitorId = getVisitorId();
+        _domain = domain;
+        initValues();
     }
 
 
@@ -200,14 +216,71 @@ public class CookieJar
     //--------------------------------------------------------------------------
 
     /**
+     *  Generate a new value for the utma cookie, updating the
+     *  <code>lastVisit</code> and <code>utmaExpiration</code> properties.
+     */
+    public function generateNewUTMAValue():String
+    {
+        var now:int = Math.round(new Date().time / 1000);
+        var previous:int = lastVisit;
+
+        _utmaExpiration = now + 63072000; // 2 years, 3600 * 24 * 365 * 2
+        _lastVisit = now;
+        flushValues();
+
+        return [ domainHash, visitorId, firstVisit, previous, now, numSessions ].join(".") + ";";
+    }
+
+    /**
      *  @private
      *  Initializes the local <code>SharedObject</code> and retrieves any
      *  values that are already set.
      */
-    private function initSharedObject():void
+    private function initValues():void
     {
         // default path is "/", like in non-custom ga.js.
         sharedObject = SharedObject.getLocal("as3-gatracking", "/");
+
+        var now:int = Math.round(new Date().time / 1000);
+
+        if (sharedObject.data.domain)
+        {
+            // repeat visit, retrieve values.
+            _domainHash = sharedObject.data.domainHash;
+            _visitorId = sharedObject.data.visitorId;
+            _firstVisit = sharedObject.data.firstVisit;
+            _lastVisit = sharedObject.data.lastVisit;
+        }
+        else
+        {
+            // first time here.
+            sharedObject.data.domain = domain;
+
+            _domainHash = sharedObject.data.domainHash = getDomainHash(domain);
+            _visitorId = sharedObject.data.visitorId = getVisitorId();
+            _firstVisit = sharedObject.data.firstVisit = now;
+            _lastVisit = sharedObject.data.lastVisit = now;
+        }
+
+        _utmaExpiration = now + 63072000; // 2 years, 3600 * 24 * 365 * 2
+        flushValues();
+    }
+
+    /**
+     *  @private
+     *  Flushes current values to disk via the local <code>SharedObject</code>
+     *  instance.
+     */
+    private function flushValues():void
+    {
+        sharedObject.data.domainHash = domainHash;
+        sharedObject.data.visitorId = visitorId;
+        sharedObject.data.firstVisit = firstVisit;
+        sharedObject.data.lastVisit = lastVisit;
+        sharedObject.data.numSessions = numSessions;
+        sharedObject.data.utmaExpiration = utmaExpiration;
+
+        sharedObject.flush();
     }
 
     /**
@@ -216,38 +289,20 @@ public class CookieJar
      *  once and stored in the shared object. For any future queries it is
      *  returned from the SO.
      *
-     *  @param domain Domain for which the hash will be generated.
+     *  @param domain Domain from which a hash will be generated.
      */
-    private function getDomainHash(domain:String):String
+    private function getDomainHash(domain:String):int
     {
-        var domainHash:String;
+        var domainHash:int;
         
         if (sharedObject)
             domainHash = sharedObject.data.domainHash;
 
         if (!domainHash)
         {
-            // Here's the javascript code for generating the hash...
-            /*
-            function hash(d) {
-                var a = 1, c = 0, h, o;
-                if (d) {
-                    a = 0;
-                    for (h = d["length"] - 1; h >= 0; h--) {
-                        o = d.charCodeAt(h);
-                        a = (a << 6 & 268435455) + o + (o << 14);
-                        c = a & 266338304;
-                        a = c != 0 ? a ^ c >> 21 : a;
-                    }
-                }
-                return a
-            }
-            */
-            // and here's what we'll use for now:
-            domainHash = "1";
-
-            sharedObject.data.domainHash = domainHash;
-            sharedObject.flush();
+            domainHash = generateHash(domain);
+            _domainHash = domainHash;
+            flushValues();
         }
 
         return domainHash;
@@ -255,21 +310,53 @@ public class CookieJar
 
     /**
      *  @private
+     *  Generates a numeric hash from a string value.
+     *
+     *  <p>Code taken from <a
+     *  href="http://www.google.com/support/forum/p/Google+Analytics/thread?tid=626b0e277aaedc3c&hl=en">the
+     *  Google Analytics help forum</a>.</p>
+     *
+     *  @param string String from which a numeric hash will be generated.
+     */
+    private function generateHash(string:String):int
+    {
+        var hash:int = 1;
+        if (string)
+        {
+            for (var i:int = string.length - 1; i >= 0; i--)
+            {
+                var charCode:int = string.charCodeAt(i);
+                hash = ((hash << 6) & 0xffffffff) + charCode + (charCode << 14);
+                var left:int = hash & 0xfe000000;
+                if (left != 0)
+                    hash ^= left >> 21;
+            }
+
+        }
+        return hash;
+    }
+
+    /**
+     *  @private
      *  Returns the unique visitor ID. The ID is only generated once and then
      *  stored on the shared object for any future queries.
      */
-    private function getVisitorId():String
+    private function getVisitorId():int
     {
-        var visitorId:String;
+        var visitorId:int;
 
         if (sharedObject)
             visitorId = sharedObject.data.visitorId;
 
         if (!visitorId)
         {
-            // FIXME: do a better job at uniqueness...
-            visitorId = String(Math.round(Math.random() * 0x7fffffff));
-            sharedObject.data.visitorId = visitorId;
+            // FIXME: do a better job at generating uniqueness...
+            visitorId = generateHash(
+                Math.round(Math.random() * 0x7fffffff).toString()
+                );
+
+            _visitorId = visitorId;
+            flushValues();
         }
 
         return visitorId;
