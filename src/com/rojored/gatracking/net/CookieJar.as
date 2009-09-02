@@ -152,6 +152,24 @@ public class CookieJar
     }
 
     //--------------------------------------
+    //   currentVisit
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the currentVisit property.
+     */
+    private var _currentVisit:Number;
+
+    /**
+     *  Timestamp of the begining of the user's current visit, in UNIX epoch.
+     */
+    public function get currentVisit():Number
+    {
+        return _currentVisit;
+    }
+
+    //--------------------------------------
     //   numSessions
     //--------------------------------------
 
@@ -222,13 +240,11 @@ public class CookieJar
     public function generateNewUTMAValue():String
     {
         var now:int = Math.round(new Date().time / 1000);
-        var previous:int = lastVisit;
 
         _utmaExpiration = now + 63072000; // 2 years, 3600 * 24 * 365 * 2
-        _lastVisit = now;
         flushValues();
 
-        return [ domainHash, visitorId, firstVisit, previous, now, numSessions ].join(".") + ";";
+        return [ domainHash, visitorId, firstVisit, lastVisit, currentVisit, numSessions ].join(".") + ";";
     }
 
     /**
@@ -249,8 +265,9 @@ public class CookieJar
             _domainHash = sharedObject.data.domainHash;
             _visitorId = sharedObject.data.visitorId;
             _firstVisit = sharedObject.data.firstVisit;
-            _lastVisit = sharedObject.data.lastVisit;
-            _numSessions = sharedObject.data.numSessions;
+            _lastVisit = sharedObject.data.currentVisit;
+            _currentVisit = sharedObject.data.currentVisit = now;
+            _numSessions = sharedObject.data.numSessions++;
         }
         else
         {
@@ -261,6 +278,7 @@ public class CookieJar
             _visitorId = sharedObject.data.visitorId = getVisitorId();
             _firstVisit = sharedObject.data.firstVisit = now;
             _lastVisit = sharedObject.data.lastVisit = now;
+            _currentVisit = sharedObject.data.currentVisit = now;
             _numSessions = sharedObject.data.numSessions = 1;
         }
 
@@ -279,6 +297,7 @@ public class CookieJar
         sharedObject.data.visitorId = visitorId;
         sharedObject.data.firstVisit = firstVisit;
         sharedObject.data.lastVisit = lastVisit;
+        sharedObject.data.currentVisit = currentVisit;
         sharedObject.data.numSessions = numSessions;
         sharedObject.data.utmaExpiration = utmaExpiration;
 
