@@ -318,20 +318,20 @@ public class CookieJar
      *  href="http://www.google.com/support/forum/p/Google+Analytics/thread?tid=626b0e277aaedc3c&hl=en">the
      *  Google Analytics help forum</a>.</p>
      *
-     *  @param string String from which a numeric hash will be generated.
+     *  @param input String from which a numeric hash will be generated.
      */
-    private function generateHash(string:String):int
+    private function generateHash(input:String):int
     {
         var hash:int = 1;
-        if (string)
+        if (input)
         {
-            for (var i:int = string.length - 1; i >= 0; i--)
+            hash = 0;
+            for (var i:int = input.length - 1; i >= 0; i--)
             {
-                var charCode:int = string.charCodeAt(i);
-                hash = ((hash << 6) & 0xffffffff) + charCode + (charCode << 14);
-                var left:int = hash & 0xfe000000;
-                if (left != 0)
-                    hash ^= left >> 21;
+                var charCode:int = input.charCodeAt(i);
+                hash = (hash << 6 & 0xfffffff) + charCode + (charCode << 14);
+                var left:int = hash & 0xfe00000;
+                if (left != 0) hash ^= left >> 21;
             }
 
         }
