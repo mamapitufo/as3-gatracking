@@ -2,3 +2,45 @@
 
 http://www.pickledshark.com/google-analytics-cookies/
 http://code.google.com/apis/analytics/docs/concepts/gaConceptsCookies.html
+
+
+event example:
+atmwv=4.3as
+utmn=1199328520
+utmhn=solidsystemscr.com
+utmt=event
+utme=5(ID1*ID2*timeOver)(5029)
+utmcs=UTF-8
+utmsr=1680x1050
+utmsc=24-bit
+utmul=en-us
+utmje=0
+utmfl=10.0%20r32
+utmdt=Test.swf%20(application/x-shockwave-flash%20Object)
+utmhid=2019715795
+utmr=-
+utmp=/MoveTest/Test.swf
+utmac=UA-6128326-2
+utmcc=__utma%3D146289974.1566102518155979800.1251499531.1251752694.1251926380.4%3B%2B__utmz%3D146289974.1251499531.1.1.utmcsr%3D(direct)%7Cutmccn%3D(direct)%7Cutmcmd%3D(none)%3B
+------
+__utma=146289974.1566102518155979800.1251499531.1251752694.1251926380.4;+__utmz=146289974.1251499531.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none);
+
+
+pageview example:
+utmwv=4.3as
+utmn=1360599873
+utmhn=solidsystemscr.com
+utmcs=UTF-8
+utmsr=1680x1050
+utmsc=24-bit
+utmul=en-us
+utmje=0
+utmfl=10.0%20r32
+utmdt=Test.swf%20(application/x-shockwave-flash%20Object)
+utmhid=2019715795
+utmr=-
+utmp=/myGame1
+utmac=UA-6128326-2
+utmcc=__utma%3D146289974.1566102518155979800.1251499531.1251752694.1251926380.4%3B%2B__utmz%3D146289974.1251499531.1.1.utmcsr%3D(direct)%7Cutmccn%3D(direct)%7Cutmcmd%3D(none)%3B
+----------
+__utma=146289974.1566102518155979800.1251499531.1251752694.1251926380.4;+__utmz=146289974.1251499531.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none);
