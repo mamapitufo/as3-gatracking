@@ -139,6 +139,15 @@ public class AnalyticsTracker
      */
     public var cookieJar:CookieJar;
 
+    //--------------------------------------
+    //   lastPage
+    //--------------------------------------
+
+    /**
+     *  Last tracked pageview.
+     */
+    public var lastPage:String;
+
     //--------------------------------------------------------------------------
     //
     //  Constructor
@@ -180,6 +189,27 @@ public class AnalyticsTracker
     {
         var variables:RequestVariables = new RequestVariables();
         variables.utmp = pageURL;
+        lastPage = pageURL;
+
+        trackRequest(variables);
+    }
+
+    /**
+     *  Tracks an event.
+     */
+    public function trackEvent(category:String,
+                               action:String,
+                               label:String = null,
+                               value:Number = NaN):void
+    {
+        var variables:RequestVariables = new RequestVariables();
+        variables.utmp = lastPage;
+        variables.utmt = "event";
+
+        variables.utme = "5(" + category + "*" + action;
+        variables.utme += label ? "*" + label : "";
+        variables.utme += ")";
+        variables.utme += isNaN(value) ? "" : "(" + value + ")";
 
         trackRequest(variables);
     }
