@@ -152,6 +152,24 @@ public class CookieJar
     }
 
     //--------------------------------------
+    //   currentVisit
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the currentVisit property.
+     */
+    private var _currentVisit:Number;
+
+    /**
+     *  Timestamp of the begining of the user's current visit, in UNIX epoch.
+     */
+    public function get currentVisit():Number
+    {
+        return _currentVisit;
+    }
+
+    //--------------------------------------
     //   numSessions
     //--------------------------------------
 
@@ -222,13 +240,11 @@ public class CookieJar
     public function generateNewUTMAValue():String
     {
         var now:int = Math.round(new Date().time / 1000);
-        var previous:int = lastVisit;
 
         _utmaExpiration = now + 63072000; // 2 years, 3600 * 24 * 365 * 2
-        _lastVisit = now;
         flushValues();
 
-        return [ domainHash, visitorId, firstVisit, previous, now, numSessions ].join(".") + ";";
+        return [ domainHash, visitorId, firstVisit, lastVisit, currentVisit, numSessions ].join(".") + ";";
     }
 
     /**
@@ -249,8 +265,9 @@ public class CookieJar
             _domainHash = sharedObject.data.domainHash;
             _visitorId = sharedObject.data.visitorId;
             _firstVisit = sharedObject.data.firstVisit;
-            _lastVisit = sharedObject.data.lastVisit;
-            _numSessions = sharedObject.data.numSessions;
+            _lastVisit = sharedObject.data.currentVisit;
+            _currentVisit = sharedObject.data.currentVisit = now;
+            _numSessions = sharedObject.data.numSessions++;
         }
         else
         {
@@ -261,6 +278,7 @@ public class CookieJar
             _visitorId = sharedObject.data.visitorId = getVisitorId();
             _firstVisit = sharedObject.data.firstVisit = now;
             _lastVisit = sharedObject.data.lastVisit = now;
+            _currentVisit = sharedObject.data.currentVisit = now;
             _numSessions = sharedObject.data.numSessions = 1;
         }
 
@@ -279,6 +297,7 @@ public class CookieJar
         sharedObject.data.visitorId = visitorId;
         sharedObject.data.firstVisit = firstVisit;
         sharedObject.data.lastVisit = lastVisit;
+        sharedObject.data.currentVisit = currentVisit;
         sharedObject.data.numSessions = numSessions;
         sharedObject.data.utmaExpiration = utmaExpiration;
 
@@ -318,20 +337,20 @@ public class CookieJar
      *  href="http://www.google.com/support/forum/p/Google+Analytics/thread?tid=626b0e277aaedc3c&hl=en">the
      *  Google Analytics help forum</a>.</p>
      *
-     *  @param string String from which a numeric hash will be generated.
+     *  @param input String from which a numeric hash will be generated.
      */
-    private function generateHash(string:String):int
+    private function generateHash(input:String):int
     {
         var hash:int = 1;
-        if (string)
+        if (input)
         {
-            for (var i:int = string.length - 1; i >= 0; i--)
+            hash = 0;
+            for (var i:int = input.length - 1; i >= 0; i--)
             {
-                var charCode:int = string.charCodeAt(i);
-                hash = ((hash << 6) & 0xffffffff) + charCode + (charCode << 14);
-                var left:int = hash & 0xfe000000;
-                if (left != 0)
-                    hash ^= left >> 21;
+                var charCode:int = input.charCodeAt(i);
+                hash = (hash << 6 & 0xfffffff) + charCode + (charCode << 14);
+                var left:int = hash & 0xfe00000;
+                if (left != 0) hash ^= left >> 21;
             }
 
         }
