@@ -148,6 +148,27 @@ public class AnalyticsTracker
      */
     public var lastPage:String;
 
+    //--------------------------------------
+    //   domain
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the domain property.
+     */
+    private var _domain:String;
+
+    /**
+     *  Domain name used in cookies.
+     */
+    public function get domain():String
+    {
+        if (!_domain)
+            _domain = _hostname;
+
+        return _domain;
+    }
+
     //--------------------------------------------------------------------------
     //
     //  Constructor
@@ -168,7 +189,7 @@ public class AnalyticsTracker
         this.display = display;
         _hostname = hostnameFromURL(display.root.loaderInfo.url);
 
-        cookieJar = new CookieJar(hostname);
+        cookieJar = new CookieJar(domain);
 
         _accountId = accountId;
     }
@@ -212,6 +233,15 @@ public class AnalyticsTracker
         variables.utme += isNaN(value) ? "" : "(" + value + ")";
 
         trackRequest(variables);
+    }
+
+    /**
+     *  Forces the domain name.
+     */
+    public function setDomainName(domain:String):void
+    {
+        _domain = domain;
+        cookieJar = new CookieJar(domain);
     }
 
 

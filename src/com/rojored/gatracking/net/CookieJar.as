@@ -259,22 +259,18 @@ public class CookieJar
 
         var now:int = Math.round(new Date().time / 1000);
 
-        if (sharedObject.data.domain)
+        if (sharedObject.data.domain) // repeat visit, retrieve values.
         {
-            // repeat visit, retrieve values.
-            _domainHash = sharedObject.data.domainHash;
             _visitorId = sharedObject.data.visitorId;
             _firstVisit = sharedObject.data.firstVisit;
             _lastVisit = sharedObject.data.currentVisit;
             _currentVisit = sharedObject.data.currentVisit = now;
             _numSessions = sharedObject.data.numSessions++;
         }
-        else
+        else // first time here.
         {
-            // first time here.
             sharedObject.data.domain = domain;
 
-            _domainHash = sharedObject.data.domainHash = getDomainHash(domain);
             _visitorId = sharedObject.data.visitorId = getVisitorId();
             _firstVisit = sharedObject.data.firstVisit = now;
             _lastVisit = sharedObject.data.lastVisit = now;
@@ -282,6 +278,7 @@ public class CookieJar
             _numSessions = sharedObject.data.numSessions = 1;
         }
 
+        _domainHash = sharedObject.data.domainHash = getDomainHash(domain);
         _utmaExpiration = now + 63072000; // 2 years, 3600 * 24 * 365 * 2
         flushValues();
     }
@@ -316,13 +313,17 @@ public class CookieJar
     {
         var domainHash:int;
         
-        if (sharedObject)
-            domainHash = sharedObject.data.domainHash;
-
-        if (!domainHash)
+        if (domain == "none")
         {
-            domainHash = generateHash(domain);
-            _domainHash = domainHash;
+            _domainHash = sharedObject.data.domainHash = domainHash = 1;
+        }
+        else if (sharedObject)
+        {
+            domainHash = sharedObject.data.domainHash;
+        }
+        else
+        {
+            _domainHash = domainHash = generateHash(domain);
             flushValues();
         }
 
