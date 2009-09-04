@@ -371,8 +371,8 @@ public class RequestVariables
         if (utmt)
             params.push("utmt=" + encodeURIComponent(utmt));
         if (utme)
-            params.push("utme=" + encodeURIComponent(utme));
-        params.push("utmp=" + encodeURIComponent(utmp));
+            params.push("utme=" + encodeURI(utme));
+        params.push("utmp=" + encodeURI(utmp));
         if (utmac)
             params.push("utmac=" + utmac);
         if (utmcc)
