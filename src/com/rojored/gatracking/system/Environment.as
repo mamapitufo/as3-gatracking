@@ -27,6 +27,7 @@ package com.rojored.gatracking.system
 {
 
 import flash.display.DisplayObject;
+import flash.system.Capabilities;
 
 /**
  *  The <code>Environment</code> class provides information about the system
@@ -115,6 +116,24 @@ public class Environment
         return _protocol;
     }
 
+    //--------------------------------------
+    //   flashPlayerVersion
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the flashPlayerVersion property.
+     */
+    private var _flashPlayerVersion:String;
+
+    /**
+     *  Flash player version string.
+     */
+    public function get flashPlayerVersion():String
+    {
+        return _flashPlayerVersion;
+    }
+
 
     //--------------------------------------------------------------------------
     //
@@ -139,6 +158,8 @@ public class Environment
 
         if (display && display.root && display.root.loaderInfo)
             parseURL(display.root.loaderInfo.url);
+
+        loadCapabilities();
     }
 
 
@@ -173,6 +194,17 @@ public class Environment
             _hostname = "localhost";
             _protocol = PROTOCOL_FILE;
         }
+    }
+
+    /**
+     *  @private
+     *  Get system capabilities, such as screen resolution, color depth,
+     *  browser locale.
+     */
+    private function loadCapabilities():void
+    {
+        // need to parse this...
+        //_flashPlayerVersion = Capabilities.version;
     }
 
 
