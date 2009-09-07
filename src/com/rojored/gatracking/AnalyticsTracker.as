@@ -106,23 +106,6 @@ public class AnalyticsTracker
     public var configuration:Configuration;
 
     //--------------------------------------
-    //   accountId
-    //--------------------------------------
-
-    /**
-     *  @private
-     */
-    private var _accountId:String;
-
-    /**
-     *  Account string.
-     */
-    public function get accountId():String
-    {
-        return _accountId;
-    }
-
-    //--------------------------------------
     //   hostname
     //--------------------------------------
 
@@ -191,6 +174,8 @@ public class AnalyticsTracker
      *  @param display Display object used to get environment information.
      *  The instance must be attached to the display list.
      *  @param accountId Google Analytics account string.
+     *
+     *  @throws ArgumentError if the accountId parameter is not valid.
      */
     public function AnalyticsTracker(display:DisplayObject, accountId:String)
     {
@@ -202,8 +187,6 @@ public class AnalyticsTracker
         _hostname = hostnameFromURL(display.root.loaderInfo.url);
 
         cookieJar = new CookieJar(domain);
-
-        _accountId = accountId;
     }
 
 
@@ -275,7 +258,7 @@ public class AnalyticsTracker
             variables = new RequestVariables();
 
         // Default parameters.
-        variables.utmac = accountId;
+        variables.utmac = configuration.accountId;
         variables.utmhn = hostname;
         variables.utmwv = API_VERSION;
         variables.utmcc = encodeURI("__utma=" + cookieJar.generateNewUTMAValue());

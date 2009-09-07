@@ -80,6 +80,8 @@ public class Configuration
      *  Constructor.
      *
      *  @param accountId Google Analytics account Id.
+     *
+     *  @throws ArgumentError if the accountId parameter is not valid.
      */
     public function Configuration(accountId:String)
     {
@@ -103,7 +105,9 @@ public class Configuration
         var accountValidate:RegExp = /^UA-\d+-\d+/;
 
         if (!accountValidate.exec(accountId))
-            throw new Error("'" + accountId + "' is not a valid Analytics account Id");
+            throw new ArgumentError(
+                "'" + accountId + "' is not a valid Analytics account Id"
+                );
 
         return accountId;
     }
