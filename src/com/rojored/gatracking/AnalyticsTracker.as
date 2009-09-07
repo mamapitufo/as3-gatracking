@@ -29,6 +29,7 @@ package com.rojored.gatracking
 import com.rojored.gatracking.data.Configuration;
 import com.rojored.gatracking.net.CookieJar;
 import com.rojored.gatracking.net.RequestVariables;
+import com.rojored.gatracking.system.Environment;
 import flash.display.DisplayObject;
 import flash.display.Loader;
 import flash.events.Event;
@@ -75,12 +76,6 @@ public class AnalyticsTracker
     //
     //--------------------------------------------------------------------------
 
-    /**
-     *  @private
-     *  "parent" DisplayObject instance, used to get URL and such things.
-     */
-    private var display:DisplayObject;
-
     // FIXME: there should be some sort of queueing, in case a tracking
     // request is pending when a new one is made.
     /**
@@ -106,22 +101,13 @@ public class AnalyticsTracker
     public var configuration:Configuration;
 
     //--------------------------------------
-    //   hostname
+    //   environment
     //--------------------------------------
 
     /**
-     *  @private
-     *  Storage for the hostname property
+     *  Environment information.
      */
-    private var _hostname:String;
-
-    /**
-     *  Hostname where the flash file is located.
-     */
-    public function get hostname():String
-    {
-        return _hostname;
-    }
+    public var environment:Environment;
 
     //--------------------------------------
     //   cookieJar
@@ -182,11 +168,8 @@ public class AnalyticsTracker
         super();
 
         configuration = new Configuration(accountId);
-
-        this.display = display;
-        _hostname = hostnameFromURL(display.root.loaderInfo.url);
-
-        cookieJar = new CookieJar(domain);
+        environment = new Environment(display);
+        cookieJar = new CookieJar(environment.hostname);
     }
 
 
@@ -250,7 +233,7 @@ public class AnalyticsTracker
 
         // Default parameters.
         variables.utmac = configuration.accountId;
-        variables.utmhn = hostname;
+        variables.utmhn = environment.hostname;
         variables.utmwv = API_VERSION;
         variables.utmcc = encodeURI("__utma=" + cookieJar.generateNewUTMAValue());
 
@@ -286,17 +269,6 @@ public class AnalyticsTracker
             IOErrorEvent.IO_ERROR,
             loader_ioErrorHandler
             );
-    }
-
-    /**
-     *  @private
-     */
-    private function hostnameFromURL(url:String):String
-    {
-        var matchDomain:RegExp = new RegExp("^(https?://)(?P<domain>[^/]+)");
-        var result:Object = matchDomain.exec(url);
-
-        return (result ? result.domain : "localhost");
     }
 
 
