@@ -313,11 +313,7 @@ public class CookieJar
     {
         var domainHash:int;
         
-        if (domain == "none")
-        {
-            _domainHash = sharedObject.data.domainHash = domainHash = 1;
-        }
-        else if (sharedObject)
+        if (sharedObject)
         {
             domainHash = sharedObject.data.domainHash;
         }
