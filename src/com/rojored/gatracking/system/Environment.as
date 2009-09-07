@@ -89,6 +89,24 @@ public class Environment
     }
 
     //--------------------------------------
+    //   path
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the path property.
+     */
+    private var _path:String;
+
+    /**
+     *  Path on the server from where the SWF file was loaded.
+     */
+    public function get path():String
+    {
+        return _path;
+    }
+
+    //--------------------------------------
     //   protocol
     //--------------------------------------
 
@@ -180,19 +198,22 @@ public class Environment
      */
     private function parseURL(url:String):void
     {
+        // FIXME: better handling of file:// URLs, to get the path from them.
         var urlParser:RegExp = 
-            new RegExp("^(?P<proto>https?)://(?P<domain>[^/]+)");
+            new RegExp("^(?P<proto>https?)://(?P<domain>[^/]+)(?P<path>/.*/)[^/]\??");
         var results:Object = urlParser.exec(url);
 
         if (results)
         {
             _hostname = results.domain;
             _protocol = (results.proto == "http" ? PROTOCOL_HTTP : PROTOCOL_HTTPS);
+            _path = results.path;
         }
         else
         {
             _hostname = "localhost";
             _protocol = PROTOCOL_FILE;
+            _path = "/";
         }
     }
 
@@ -203,7 +224,7 @@ public class Environment
      */
     private function loadCapabilities():void
     {
-        // need to parse this...
+        // TODO: need to parse this...
         //_flashPlayerVersion = Capabilities.version;
     }
 
