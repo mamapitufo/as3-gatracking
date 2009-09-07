@@ -230,15 +230,6 @@ public class AnalyticsTracker
         trackRequest(variables);
     }
 
-    /**
-     *  Forces the domain name.
-     */
-    public function setDomainName(domain:String):void
-    {
-        _domain = domain;
-        cookieJar = new CookieJar(domain);
-    }
-
 
     //--------------------------------------------------------------------------
     //
