@@ -127,26 +127,6 @@ public class AnalyticsTracker
      */
     public var lastPage:String;
 
-    //--------------------------------------
-    //   domain
-    //--------------------------------------
-
-    /**
-     *  @private
-     *  Storage for the domain property.
-     */
-    private var _domain:String;
-
-    /**
-     *  Domain name used in cookies.
-     */
-    public function get domain():String
-    {
-        if (!_domain)
-            _domain = _hostname;
-
-        return _domain;
-    }
 
     //--------------------------------------------------------------------------
     //
