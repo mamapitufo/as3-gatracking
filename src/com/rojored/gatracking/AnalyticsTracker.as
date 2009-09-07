@@ -26,6 +26,7 @@
 package com.rojored.gatracking
 {
 
+import com.rojored.gatracking.data.Configuration;
 import com.rojored.gatracking.net.CookieJar;
 import com.rojored.gatracking.net.RequestVariables;
 import flash.display.DisplayObject;
@@ -94,6 +95,15 @@ public class AnalyticsTracker
     //  Properties
     //
     //--------------------------------------------------------------------------
+
+    //--------------------------------------
+    //   configuration
+    //--------------------------------------
+
+    /**
+     *  Analytics configuration.
+     */
+    public var configuration:Configuration;
 
     //--------------------------------------
     //   accountId
@@ -185,6 +195,8 @@ public class AnalyticsTracker
     public function AnalyticsTracker(display:DisplayObject, accountId:String)
     {
         super();
+
+        configuration = new Configuration(accountId);
 
         this.display = display;
         _hostname = hostnameFromURL(display.root.loaderInfo.url);
