@@ -175,7 +175,7 @@ public class Environment
         super();
 
         if (display && display.root && display.root.loaderInfo)
-            parseURL(display.root.loaderInfo.url);
+            loadURLComponents(display.root.loaderInfo.url);
 
         loadCapabilities();
     }
@@ -196,7 +196,7 @@ public class Environment
      *
      *  @param url URL for the current SWF.
      */
-    private function parseURL(url:String):void
+    private function loadURLComponents(url:String):void
     {
         // FIXME: better handling of file:// URLs, to get the path from them.
         var urlParser:RegExp = 
@@ -224,8 +224,22 @@ public class Environment
      */
     private function loadCapabilities():void
     {
-        // TODO: need to parse this...
-        //_flashPlayerVersion = Capabilities.version;
+        _flashPlayerVersion = getFlashPlayerVersion();
+    }
+
+    /**
+     *  @private
+     *  Parse Flash Player version.
+     */
+    private function getFlashPlayerVersion():String
+    {
+        var versionParse:RegExp =
+            /[A-Z]+ (?P<major>\d+),(?P<minor>\d+),(?P<rev>\d+),\d+/;
+        var result:Object = versionParse.exec(Capabilities.version);
+
+        return result ?
+            result.major + "." + result.minor + " r" + result.rev :
+            "-";
     }
 
 
