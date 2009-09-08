@@ -365,16 +365,26 @@ public class RequestVariables
 
         if (utmwv)
             params.push("utmwv=" + encodeURIComponent(utmwv));
+
         params.push("utmn=" + new Date().time);
+
         if (utmhn)
             params.push("utmhn=" + encodeURIComponent(utmhn));
+
+        if (utmfl)
+            params.push("utmfl=" + encodeURIComponent(utmfl));
+
         if (utmt)
             params.push("utmt=" + encodeURIComponent(utmt));
+
         if (utme)
             params.push("utme=" + encodeURI(utme));
+
         params.push("utmp=" + encodeURI(utmp));
+
         if (utmac)
             params.push("utmac=" + utmac);
+
         if (utmcc)
             params.push("utmcc=" + utmcc);
 

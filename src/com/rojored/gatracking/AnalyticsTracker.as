@@ -215,6 +215,7 @@ public class AnalyticsTracker
         variables.utmac = configuration.accountId;
         variables.utmhn = environment.hostname;
         variables.utmwv = API_VERSION;
+        variables.utmfl = environment.flashPlayerVersion;
         variables.utmcc = encodeURI("__utma=" + cookieJar.generateNewUTMAValue());
 
         var request:URLRequest = new URLRequest(TRACK_GIF_URL);
