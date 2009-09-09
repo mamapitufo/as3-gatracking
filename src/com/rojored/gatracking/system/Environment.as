@@ -27,6 +27,7 @@ package com.rojored.gatracking.system
 {
 
 import flash.display.DisplayObject;
+import flash.external.ExternalInterface;
 import flash.system.Capabilities;
 
 /**
@@ -132,6 +133,24 @@ public class Environment
     public function get protocol():String
     {
         return _protocol;
+    }
+
+    //--------------------------------------
+    //   hasExternalInterface
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the hasExternalInterface property.
+     */
+    private var _hasExternalInterface:Boolean;
+
+    /**
+     *  Whether there is access to ExternalInterface functionality.
+     */
+    public function get hasExternalInterface():Boolean
+    {
+        return _hasExternalInterface;
     }
 
     //--------------------------------------
@@ -242,6 +261,8 @@ public class Environment
      */
     private function loadCapabilities():void
     {
+        _hasExternalInterface = ExternalInterface.available;
+
         _flashPlayerVersion = getFlashPlayerVersion();
         _screenResolution =
             Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY;
