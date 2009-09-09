@@ -371,6 +371,9 @@ public class RequestVariables
         if (utmhn)
             params.push("utmhn=" + encodeURIComponent(utmhn));
 
+        if (utmsr)
+            params.push("utmsr=" + utmsr);
+
         if (utmfl)
             params.push("utmfl=" + encodeURIComponent(utmfl));
 

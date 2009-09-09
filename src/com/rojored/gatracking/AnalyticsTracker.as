@@ -215,6 +215,7 @@ public class AnalyticsTracker
         variables.utmac = configuration.accountId;
         variables.utmhn = environment.hostname;
         variables.utmwv = API_VERSION;
+        variables.utmsr = environment.screenResolution;
         variables.utmfl = environment.flashPlayerVersion;
         variables.utmcc = encodeURI("__utma=" + cookieJar.generateNewUTMAValue());
 

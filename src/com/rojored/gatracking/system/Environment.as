@@ -135,6 +135,24 @@ public class Environment
     }
 
     //--------------------------------------
+    //   screenResolution
+    //--------------------------------------
+
+    /**
+     *  @private
+     *  Storage for the screenResolution property.
+     */
+    private var _screenResolution:String;
+
+    /**
+     *  Current screen resolution.
+     */
+    public function get screenResolution():String
+    {
+        return _screenResolution;
+    }
+
+    //--------------------------------------
     //   flashPlayerVersion
     //--------------------------------------
 
@@ -225,6 +243,8 @@ public class Environment
     private function loadCapabilities():void
     {
         _flashPlayerVersion = getFlashPlayerVersion();
+        _screenResolution =
+            Capabilities.screenResolutionX + "x" + Capabilities.screenResolutionY;
     }
 
     /**
