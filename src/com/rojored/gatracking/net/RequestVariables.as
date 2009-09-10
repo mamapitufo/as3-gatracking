@@ -63,7 +63,7 @@ public class RequestVariables
      */
     public function get utmac():String
     {
-        return encodeURIComponent(_utmac);
+        return _utmac;
     }
 
     /**
@@ -72,7 +72,7 @@ public class RequestVariables
     public function set utmac(value:String):void
     {
         if (/^UA-\d+-\d+$/.test(value))
-            _utmac = value;
+            _utmac = encodeURIComponent(value);
         else
             throw new Error(
                 "'" + value + "' is not a valid Google Analytics account"
