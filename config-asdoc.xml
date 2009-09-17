@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flex-config>
+
+    <target-player>9.0.115</target-player>
+
+    <output>docs/api</output>
+    <doc-sources>
+        <path-element>src</path-element>
+    </doc-sources>
+    <compiler>
+        <source-path>
+            <path-element>src</path-element>
+        </source-path>
+        <library-path>
+            <path-element>libs</path-element>
+        </library-path>
+        <external-library-path>
+            <path-element>/opt/flex_sdk/frameworks/libs/player/9/playerglobal.swc</path-element>
+        </external-library-path>
+    </compiler>
+</flex-config>
