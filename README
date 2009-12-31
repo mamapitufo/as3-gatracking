@@ -1,2 +1,5 @@
 Simple, proof-of-concept, library for tracking data collection via google
 analythics.
+
+It can do very basic tracking, but environment information will be missing
+(referer, etc)
